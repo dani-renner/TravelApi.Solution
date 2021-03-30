@@ -11,6 +11,7 @@ namespace TravelApi.Models
 
         public DbSet<Location> Locations { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<LocationReview> LocationReview { get; set; }
 
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
         // {

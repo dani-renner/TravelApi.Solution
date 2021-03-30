@@ -6,11 +6,11 @@ namespace TravelApi.Models
   {
     public Location()
     {
-      this.Reviews = new HashSet<Review>();
+      this.JoinEntities = new HashSet<LocationReview>();
     }
     public int LocationId { get; set; }
     public string Country { get; set; }
     public string City { get; set; }
-    public ICollection<Review> Reviews { get; set; }
+    public ICollection<LocationReview> JoinEntities { get; }
   }
 }
