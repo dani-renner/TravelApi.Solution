@@ -55,7 +55,7 @@ namespace TravelApi.Controllers
     public async Task<ActionResult<Review>> Post(Review review)
     {
       _db.Reviews.Add(review);
-      await _db.SaveChangesAsync();    
+      await _db.SaveChangesAsync();
       return CreatedAtAction(nameof(GetReview), new { id = review.ReviewId }, review );
     }
 

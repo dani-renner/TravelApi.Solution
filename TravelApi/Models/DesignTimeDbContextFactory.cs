@@ -12,7 +12,7 @@ namespace TravelApi.Models
       IConfigurationRoot configuration = new ConfigurationBuilder()
         .SetBasePath(Directory.
         GetCurrentDirectory())
-        .AddJsonFile("appsetting.json")
+        .AddJsonFile("appsettings.json")
         .Build();
       
       var builder = new DbContextOptionsBuilder<TravelApiContext>();

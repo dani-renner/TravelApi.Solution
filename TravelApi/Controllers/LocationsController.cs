@@ -10,6 +10,7 @@ using TravelApi.Models;
 
 namespace TravelApi.Controllers
 {
+  [ApiVersionNeutral]
   [Route("api/[controller]")]
   [ApiController]
   public class LocationsController : ControllerBase
