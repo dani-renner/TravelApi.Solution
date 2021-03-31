@@ -8,7 +8,7 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20210330214550_Initial")]
+    [Migration("20210331212047_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,31 +35,13 @@ namespace TravelApi.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("TravelApi.Models.LocationReview", b =>
-                {
-                    b.Property<int>("LocationReviewId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReviewId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LocationReviewId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("ReviewId");
-
-                    b.ToTable("LocationReview");
-                });
-
             modelBuilder.Entity("TravelApi.Models.Review", b =>
                 {
                     b.Property<int>("ReviewId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<int>("Rating")
@@ -73,36 +55,23 @@ namespace TravelApi.Migrations
 
                     b.HasKey("ReviewId");
 
+                    b.HasIndex("LocationId");
+
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("TravelApi.Models.LocationReview", b =>
-                {
-                    b.HasOne("TravelApi.Models.Location", "Location")
-                        .WithMany("JoinEntities")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelApi.Models.Review", "Review")
-                        .WithMany("JoinEntities")
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Location");
-
-                    b.Navigation("Review");
-                });
-
-            modelBuilder.Entity("TravelApi.Models.Location", b =>
-                {
-                    b.Navigation("JoinEntities");
                 });
 
             modelBuilder.Entity("TravelApi.Models.Review", b =>
                 {
-                    b.Navigation("JoinEntities");
+                    b.HasOne("TravelApi.Models.Location", null)
+                        .WithMany("Reviews")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TravelApi.Models.Location", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

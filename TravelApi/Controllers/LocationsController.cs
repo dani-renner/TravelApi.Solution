@@ -20,10 +20,10 @@ namespace TravelApi.Controllers
     {
       _db = db;
     }
-    [HttpGet]
+    [HttpGet("all")]
     public async Task<ActionResult<IEnumerable<Location>>> Get(string country, string city)
     {
-      var query = _db.Locations.AsQueryable();
+      var query = _db.Locations.Include(entry => entry.Reviews).AsQueryable();
       if (country != null)
       {
         query = query.Where(entry => entry.Country == country);
@@ -32,10 +32,6 @@ namespace TravelApi.Controllers
       {
         query = query.Where(entry => entry.City == city);
       }
-      // if (rating != null)
-      // {
-      //   query = query.Where(entry => entry.Rating == rating);
-      // }
       return await query.ToListAsync();
     }
 

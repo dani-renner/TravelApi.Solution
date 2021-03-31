@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelApi.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TravelApi.Controllers
 {
@@ -51,11 +52,15 @@ namespace TravelApi.Controllers
       return review;
     }
 
-    [HttpPost]
-    public async Task<ActionResult<Review>> Post(Review review)
+    [HttpPost("{locationid}/createreview")]
+    public async Task<ActionResult<Review>> Post(Review review, int locationid)
     {
+      var thisLocation = _db.Locations.Include(entry => entry.Reviews).FirstOrDefault(entry => entry.LocationId == locationid);
+      review.LocationId = locationid;
+      thisLocation.Reviews.Add(review);
+      _db.Locations.Update(thisLocation);
       _db.Reviews.Add(review);
-      await _db.SaveChangesAsync();
+      await _db.SaveChangesAsync();    
       return CreatedAtAction(nameof(GetReview), new { id = review.ReviewId }, review );
     }
 
